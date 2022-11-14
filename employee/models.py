@@ -11,7 +11,7 @@ class AbstractPerson(models.Model):
     def get_age(self):
         today = datetime.date.today()
         age = today - self.birth_date
-        return f'{age.year}'
+        return f'{age}'
 
 class Employee(AbstractPerson):
     position = models.CharField(max_length=30)
@@ -37,10 +37,13 @@ class Passport(models.Model):
         return f'{self.employee.name}'
 
     def get_gender(self):
-        if list(self.inn[0]) == 1:
-            return 'Female'
+        buffer = f'{self.inn}'
+        if buffer.startswith('1'):
+            return 'female'
         else:
-            return 'Male'
+            return 'male'
+
+
 
     def save(self,*args,**kwargs):
         super().save(*args,**kwargs)
